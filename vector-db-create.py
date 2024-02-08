@@ -1,3 +1,5 @@
+#vector-db-create.py
+
 #main.py
 
 # Following the example from: https://github.com/InsightEdge01/AutogenLangchainPDFchat/blob/main/app.py
@@ -18,45 +20,37 @@ openai.api_type = "open_ai"
 openai.api_base = "http://localhost:1234/v1"
 openai.api_key = "NULL"
 
-# loaders = [PyPDFLoader('./pdfs/brain-gliomas-patient.pdf')]
+loaders = [PyPDFLoader('./pdfs/brain-gliomas-patient.pdf')]
 
-# docs = []
-# for file in loaders:
-#     docs.extend(file.load())
-# #split text to chunks
-# text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=200)
-# docs = text_splitter.split_documents(docs)
+docs = []
+for file in loaders:
+    docs.extend(file.load())
+#split text to chunks
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+docs = text_splitter.split_documents(docs)
+embedding_function = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2", model_kwargs={'device': 'cpu'})
+#print(len(docs))
 
-# #print(len(docs))
-
-# vectorstore = Chroma(
-# collection_name="full_documents",
-embedding_function=HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-#                                            model_kwargs={'device': 'cpu'})
-# )
-# # persist_directory="./chroma_db": https://python.langchain.com/docs/integrations/vectorstores/chroma
+vectorstore = Chroma.from_documents(docs, embedding_function, persist_directory="./chroma_db_nccn")
+# persist_directory="./chroma_db_nccn": https://python.langchain.com/docs/integrations/vectorstores/chroma
 
 
-# vectorstore.add_documents(docs)
-# print(vectorstore._collection.count())
-
-
-#question = "What is sterotactic biopsy?"
-#search_results = vectorstore.similarity_search(question,k=5)
-
-# for result in search_results:
-#     print(result.page_content, "\n---\n")
-
-vector_db = Chroma(persist_directory="./chroma_db_nccn", embedding_function=embedding_function)
+#vectorstore.add_documents(docs)
+print(vectorstore._collection.count())
 
 query = "What are PCR and FISH?"
 
-search_results = vector_db.similarity_search(query, k=2)
+search_results = vectorstore.similarity_search(query, k=2)
 for result in search_results:
     print(result.page_content, "\n---\n")
 
-# llm = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
+# #question = "What is sterotactic biopsy?"
+# #search_results = vectorstore.similarity_search(question,k=5)
 
+# # for result in search_results:
+# #     print(result.page_content, "\n---\n")
+
+# llm = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
 
 
 # # Build prompt
@@ -69,18 +63,11 @@ for result in search_results:
 #     Helpful Answer:"""
 # QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context", "question"],template=template,)
 
-
-
-
-
-
-#print(QA_CHAIN_PROMPT)
-
 # # Run chain
 # from langchain.chains import RetrievalQA
-# question = "What are PCR and FISH?"
+# question = "What is sterotactic biopsy?"
 # qa_chain = RetrievalQA.from_chain_type(llm,
-#                                        retriever=vector_db.as_retriever(),
+#                                        retriever=vectorstore.as_retriever(),
 #                                        return_source_documents=True,
 #                                        chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
 
@@ -93,24 +80,24 @@ for result in search_results:
 
 
 
-# from langchain_openai import ChatOpenAI
-# from langchain.prompts import ChatPromptTemplate
+# # from langchain_openai import ChatOpenAI
+# # from langchain.prompts import ChatPromptTemplate
 
-# chat = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
-
-
-# template_string = """you are an expert in helping cancer paitnets wiht their questions. Answer the following  \
-# questions ```{text}``` """
+# # chat = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
 
 
+# # template_string = """you are an expert in helping cancer paitnets wiht their questions. Answer the following  \
+# # questions ```{text}``` """
 
-# prompt_template = ChatPromptTemplate.from_template(template_string)
 
 
-# question_for_chatbot = prompt_template.format_messages(
-#                     text=question)
+# # prompt_template = ChatPromptTemplate.from_template(template_string)
 
-# print(question_for_chatbot)
+
+# # question_for_chatbot = prompt_template.format_messages(
+# #                     text=question)
+
+# # print(question_for_chatbot)
 
 
 
