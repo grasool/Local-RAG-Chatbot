@@ -1,6 +1,4 @@
-# One question only version of the QA system
-
-# Following the example from: https://github.com/InsightEdge01/AutogenLangchainPDFchat/blob/main/app.py
+# One question-only version of the QA system
 
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
