@@ -44,6 +44,16 @@ search_results = vectorstore.similarity_search(query, k=2)
 for result in search_results:
     print(result.page_content, "\n---\n")
 
+
+# make a string of the search results
+search_results_string = ""
+for result in search_results:
+    search_results_string += result.page_content + "\n---\n"
+
+# print the string
+print(search_results_string)
+print(type(search_results_string))
+
 # #question = "What is sterotactic biopsy?"
 # #search_results = vectorstore.similarity_search(question,k=5)
 

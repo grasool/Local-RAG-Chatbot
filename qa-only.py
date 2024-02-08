@@ -37,34 +37,34 @@ print(search_results_string)
 print(type(search_results_string))
 
 
-# # for result in search_results:
-# #     print(result.page_content, "\n---\n")
+# for result in search_results:
+#     print(result.page_content, "\n---\n")
 
-# llm = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
+llm = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
 
 
 
-# # Build prompt
-# from langchain.prompts import PromptTemplate
-# template = """Use the following pieces of context to answer the question at the end. \
-#     If you don't know the answer, just say that you don't know, don't try to make up an answer. \
-#     Use three sentences maximum. Keep the answer as concise as possible. Always say \
-#     "thanks for asking!" at the end of the answer.  {context} \
-#     Question: {question}
-#     Helpful Answer:"""
-# QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context", "question"],template=template,)
+# Build prompt
+from langchain.prompts import PromptTemplate
+template = """Use the following pieces of context to answer the question at the end. \
+    If you don't know the answer, just say that you don't know, don't try to make up an answer. \
+    Use three sentences maximum. Keep the answer as concise as possible. Always say \
+    "thanks for asking!" at the end of the answer.  {context} \
+    Question: {question}
+    Helpful Answer:"""
+QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context", "question"],template=template,)
 
-# #print(QA_CHAIN_PROMPT)
+#print(QA_CHAIN_PROMPT)
 
-# # Run chain
-# from langchain.chains import RetrievalQA
-# question = "What are PCR and FISH?"
-# qa_chain = RetrievalQA.from_chain_type(llm,
-#                                         retriever=vector_db.as_retriever(),
-#                                         return_source_documents=True,
-#                                         chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
+# Run chain
+from langchain.chains import RetrievalQA
+question = "What are PCR and FISH?"
+qa_chain = RetrievalQA.from_chain_type(llm,
+                                        retriever=vector_db.as_retriever(),
+                                        return_source_documents=True,
+                                        chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
 
-# print("\n\nRunning AI\n\n")
+print("\n\nRunning AI\n\n")
 
-# result = qa_chain.invoke({"query": question})
-# print(result["result"])
+result = qa_chain.invoke({"query": question})
+print(result["result"])
