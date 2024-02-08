@@ -1,6 +1,5 @@
-#test-chatbot-internal.py
-
-# Chat with an intelligent assistant in your terminal
+#
+#
 from openai import OpenAI
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
