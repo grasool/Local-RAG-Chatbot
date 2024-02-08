@@ -1,4 +1,4 @@
-#
+# Conversational agent with RAG
 #
 from openai import OpenAI
 from langchain_community.vectorstores import Chroma
