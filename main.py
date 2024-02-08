@@ -25,6 +25,8 @@ vector_db = Chroma(persist_directory="./chroma_db_nccn", embedding_function=embe
 
 query = "What are PCR and FISH for gliom patients?"
 
+print("\n\nSearching for similar documents to:", query)
+
 search_results = vector_db.similarity_search(query, k=5)
 # for result in search_results:
 #     print(result.page_content, "\n---\n")
@@ -53,6 +55,7 @@ qa_chain = RetrievalQA.from_chain_type(llm,
                                         return_source_documents=True,
                                         chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
 
+print("\n\nRunning AI\n\n")
 
 result = qa_chain.invoke({"query": question})
 print(result["result"])
