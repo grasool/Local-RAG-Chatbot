@@ -11,7 +11,7 @@ For the Retrieval Augmented Generation (RAG) component, I am using Chroma DB. Yo
 ## Embeddings
 For the embeddings, I am using sentence-transformers through langchain/HugginFace. These can be switched easily.
 
-# Use
+# Installation and Use
 
 1.  Make conda environment and activate it.
 2.  Install requirements.
