@@ -1,14 +1,9 @@
 # One question only version of the QA system
-
-# Following the example from: https://github.com/InsightEdge01/AutogenLangchainPDFchat/blob/main/app.py
-
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.memory import ConversationBufferMemory
 from langchain_community.llms import OpenAI
-from langchain.chains import ConversationalRetrievalChain
-import openai
-import autogen
+
 from langchain_openai import ChatOpenAI
 
 
@@ -23,10 +18,6 @@ print("\n\nSearching for similar documents to:", query)
 
 search_results = vector_db.similarity_search(query, k=2)
 
-# for result in search_results:
-#     print(result.page_content, "\n---\n")
-
-
 # make a string of the search results
 search_results_string = ""
 for result in search_results:
@@ -34,15 +25,8 @@ for result in search_results:
 
 # print the string
 print(search_results_string)
-print(type(search_results_string))
-
-
-# for result in search_results:
-#     print(result.page_content, "\n---\n")
 
 llm = ChatOpenAI(temperature=0.0, base_url="http://localhost:1234/v1", api_key="not-needed")
-
-
 
 # Build prompt
 from langchain.prompts import PromptTemplate
@@ -53,8 +37,6 @@ template = """Use the following pieces of context to answer the question at the 
     Question: {question}
     Helpful Answer:"""
 QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context", "question"],template=template,)
-
-#print(QA_CHAIN_PROMPT)
 
 # Run chain
 from langchain.chains import RetrievalQA
