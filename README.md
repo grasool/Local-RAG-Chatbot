@@ -12,11 +12,15 @@ For the Retrieval Augmented Generation (RAG) component, I am using Chroma DB. Yo
 For the embeddings, I am using sentence-transformers through langchain/HugginFace. These can be switched easily.
 
 # Installation and Use
-
-1.  Make conda environment and activate it.
-2.  Install requirements.
-3.  Install LM Studio and download some LLMs.
-4.  Run the LM Studio server.
-5.  Create a vector database from PDF files.
-6.  Run the conversational agent.
+1.  Install miniconda. Download from https://docs.anaconda.com/free/miniconda/index.html
+2.  Create a conda environment and activate it.
+```
+conda create --name testing-123 python=3.10
+conda activate testing-123
+```
+4.  Install requirements.
+5.  Install LM Studio and download some LLMs.
+6.  Run the LM Studio server.
+7.  Create a vector database from PDF files.
+8.  Run the conversational agent.
    
