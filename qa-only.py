@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # One question only version of the QA system
+=======
+# One question-only version of the QA system
+
+>>>>>>> 132f3b92388664dd288188880c51f391ea1d048c
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.memory import ConversationBufferMemory
