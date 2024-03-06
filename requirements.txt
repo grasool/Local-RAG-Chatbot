@@ -2,3 +2,8 @@ langchain
 langchain_community
 langchain_openai
 openai
+pypdf
+sentence-transformers
+chromadb
+toml
+requests
